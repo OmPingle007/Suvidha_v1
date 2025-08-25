@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { CircleDashed } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 const initialState = {
   message: "",
   errors: {
-    email: [],
+    email: [] as string[],
   },
 };
 
@@ -31,12 +32,12 @@ export default function CtaSection() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (state?.message && !state.errors?.email) {
+    if (state?.message && !state.errors?.email?.length) {
       toast({
         title: "Success!",
         description: state.message,
       });
-    } else if (state?.errors?.email) {
+    } else if (state?.errors?.email?.length) {
       toast({
         variant: "destructive",
         title: "Error",
@@ -58,7 +59,8 @@ export default function CtaSection() {
             </p>
           </div>
           <form action={formAction} className="flex flex-col sm:flex-row items-start gap-4 max-w-lg mx-auto">
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full space-y-2">
+               <Label htmlFor="email" className="sr-only">Email</Label>
               <Input
                 id="email"
                 name="email"
@@ -67,10 +69,10 @@ export default function CtaSection() {
                 required
                 className="h-12 text-base"
               />
+              {state?.errors?.email && <p className="text-sm text-destructive text-left">{state.errors.email[0]}</p>}
             </div>
             <SubmitButton />
           </form>
-           {state?.errors?.email && <p className="text-sm text-destructive mt-2">{state.errors.email[0]}</p>}
           <p className="text-xs text-muted-foreground">
             No spam, ever. We&apos;ll only notify you when we launch.
           </p>
