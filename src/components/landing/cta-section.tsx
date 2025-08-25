@@ -1,7 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect } from "react";
+import { useActionState, useEffect } from "react";
+import { useFormStatus } from "react-dom";
 import { addToWaitlist } from "@/app/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ function SubmitButton() {
 }
 
 export default function CtaSection() {
-  const [state, formAction] = useFormState(addToWaitlist, initialState);
+  const [state, formAction] = useActionState(addToWaitlist, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
