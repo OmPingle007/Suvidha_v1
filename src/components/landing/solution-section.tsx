@@ -1,6 +1,8 @@
+import { Upload, Cpu, FileOutput } from 'lucide-react';
+
 export default function SolutionSection() {
   return (
-    <section>
+    <section id="solution">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
@@ -23,13 +25,13 @@ export default function SolutionSection() {
               </p>
             </div>
             <div className="w-full h-48 bg-secondary rounded-lg flex items-center justify-center">
-                <div className="text-primary">Animation: Document stack</div>
+                <Upload className="w-16 h-16 text-primary" />
             </div>
           </div>
           {/* Step 2 */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
              <div className="w-full h-48 bg-secondary rounded-lg flex items-center justify-center order-last md:order-first">
-                <div className="text-primary">Animation: AI Scan</div>
+                <Cpu className="w-16 h-16 text-primary" />
             </div>
             <div className="flex flex-col items-start space-y-4 md:items-end md:text-right">
               <span className="text-6xl font-extrabold text-muted">02</span>
@@ -49,7 +51,7 @@ export default function SolutionSection() {
               </p>
             </div>
             <div className="w-full h-48 bg-secondary rounded-lg flex items-center justify-center">
-                <div className="text-primary">Animation: Data Integration</div>
+                <FileOutput className="w-16 h-16 text-primary" />
             </div>
           </div>
         </div>
