@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-
+import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
   title: 'Suvidha OCR | AI-Powered OCR for Indian MSMEs',
   description: 'Unlock Your Paperwork. Unleash Your Business. The intelligent OCR for Indian MSMEs.',
