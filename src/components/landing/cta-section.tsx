@@ -20,7 +20,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" size="lg" disabled={pending}>
+    <Button type="submit" size="lg" disabled={pending} className="h-12">
       {pending ? <CircleDashed className="animate-spin mr-2"/> : null}
       Get My Invite
     </Button>
@@ -64,7 +64,7 @@ export default function CtaSection() {
               Be the first to experience the future.
             </p>
           </div>
-          <form action={formAction} className="flex flex-col sm:flex-row items-start gap-4 max-w-lg mx-auto">
+          <form action={formAction} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 max-w-lg mx-auto">
             <div className="flex-1 w-full space-y-2">
                <Label htmlFor="email" className="sr-only">Email</Label>
               <Input
