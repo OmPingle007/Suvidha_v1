@@ -43,6 +43,12 @@ export default function CtaSection() {
         title: "Error",
         description: state.errors.email[0],
       });
+    } else if (state?.message) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: state.message,
+      });
     }
   }, [state, toast]);
 
