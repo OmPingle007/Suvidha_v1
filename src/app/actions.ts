@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { db } from "@/lib/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const emailSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -20,10 +22,10 @@ export async function addToWaitlist(prevState: any, formData: FormData) {
       };
     }
     
-    // Here you would typically save the email to a database or a service
-    // like Mailchimp, ConvertKit, Firebase Firestore, etc.
-    // For this example, we'll just log it to the console.
-    console.log("New waitlist submission:", validatedFields.data.email);
+    await addDoc(collection(db, "waitlist"), {
+      email: validatedFields.data.email,
+      createdAt: serverTimestamp(),
+    });
 
     revalidatePath("/");
 
@@ -32,6 +34,7 @@ export async function addToWaitlist(prevState: any, formData: FormData) {
       errors: {},
     };
   } catch (e) {
+    console.error(e);
     return {
       errors: {},
       message: "An unexpected error occurred. Please try again.",
