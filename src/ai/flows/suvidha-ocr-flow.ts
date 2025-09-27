@@ -8,7 +8,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
-import { gemini15Flash } from 'genkitx-googleai';
+import { gemini15Flash } from '@genkit-ai/googleai';
 
 
 // Define the input schema for the main flow
