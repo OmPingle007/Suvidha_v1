@@ -49,9 +49,13 @@ export default function TryItNowPage() {
             filename: file.name,
           });
           setResult(response);
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
-            setError('An unexpected error occurred during processing.');
+            if (e.message && e.message.includes('503 Service Unavailable')) {
+                setError('The AI service is currently busy or unavailable. Please try again in a few moments.');
+            } else {
+                setError('An unexpected error occurred during processing. Please check the console for details.');
+            }
         } finally {
             setIsLoading(false);
         }
