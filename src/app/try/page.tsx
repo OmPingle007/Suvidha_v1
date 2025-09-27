@@ -52,10 +52,10 @@ export default function TryItNowPage() {
         } catch (e: any) {
             console.error(e);
             if (e.message) {
-              if (e.message.includes('503') || e.message.toLowerCase().includes('service is currently unavailable')) {
+              if (e.message.toLowerCase().includes('model not found') || e.message.includes('404')) {
+                  setError('The configured AI model was not found. This may be an issue with your API key, its permissions, or regional availability of the model. Please verify your key in Google AI Studio and try again.');
+              } else if (e.message.includes('503') || e.message.toLowerCase().includes('service is currently unavailable')) {
                 setError('The AI service is currently busy or unavailable. This is a temporary issue. Please try again in a few moments.');
-              } else if (e.message.includes('404') || e.message.toLowerCase().includes('not found')) {
-                  setError('The configured AI model was not found. This may be a regional availability issue or a problem with the API key. Please contact support if the problem persists.');
               } else {
                   setError('An unexpected error occurred during processing. Please check the console for details and try again.');
               }
@@ -135,7 +135,7 @@ export default function TryItNowPage() {
                     onClick={() => {
                         setFile(null);
                         setResult(null);
-                        setError(null);
+setError(null);
                     }}
                   >
                     Process Another Document
