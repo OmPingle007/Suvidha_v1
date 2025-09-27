@@ -12,9 +12,6 @@ export default function Header() {
         <span className="sr-only">Suvidha OCR</span>
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
-        <Button variant="ghost" asChild>
-          <Link href="/try">Try It Now</Link>
-        </Button>
         <Button asChild>
           <Link href="#waitlist">Join the Early Access Waitlist</Link>
         </Button>
