@@ -13,6 +13,9 @@ export default function Header() {
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
         <Button asChild>
+          <Link href="/try">Try It Now</Link>
+        </Button>
+        <Button asChild variant="outline">
           <Link href="#waitlist">Join the Early Access Waitlist</Link>
         </Button>
       </nav>
