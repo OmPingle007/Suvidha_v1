@@ -51,7 +51,6 @@ const jsonPrompt = ai.definePrompt({
     name: 'suvidhaOcrJsonPrompt',
     input: { schema: SuvidhaOcrInputSchema },
     output: { schema: JsonOutputStructure },
-    model: 'googleai/gemini-pro-vision',
     prompt: `You are an expert data entry operator for Indian MSMEs. Analyze this document. Identify if it is an invoice, receipt, purchase order, or another common business document.
     
     The document may contain English, Hindi (Devanagari), and other regional Indian languages. Prioritize accuracy and structure.
@@ -68,7 +67,6 @@ const jsonPrompt = ai.definePrompt({
 const textPrompt = ai.definePrompt({
     name: 'suvidhaOcrTextPrompt',
     input: { schema: SuvidhaOcrInputSchema },
-    model: 'googleai/gemini-pro-vision',
     prompt: `You are an expert data entry operator. Analyze this document, which may be in English or an Indian regional language like Hindi.
     
     Extract all text content from the document.
@@ -83,7 +81,6 @@ const textPrompt = ai.definePrompt({
 const csvPrompt = ai.definePrompt({
     name: 'suvidhaOcrCsvPrompt',
     input: { schema: SuvidhaOcrInputSchema },
-    model: 'googleai/gemini-pro-vision',
     prompt: `You are an expert data entry operator. Analyze this document.
     
     Identify any tables within the document. Extract the data from these tables.
