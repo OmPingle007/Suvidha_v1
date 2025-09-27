@@ -12,6 +12,7 @@ import { suvidhaOcrFlow } from '@/ai/flows/suvidha-ocr-flow';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import { SuvidhaOcrOutput } from '@/ai/flows/suvidha-ocr-flow';
+import ProcessingAnimation from '@/components/try/processing-animation';
 
 export default function TryItNowPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -40,22 +41,29 @@ export default function TryItNowPage() {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
-        const documentDataUri = reader.result as string;
-        const response = await suvidhaOcrFlow({
-          documentDataUri,
-          outputFormat,
-          filename: file.name,
-        });
-        setResult(response);
+        try {
+          const documentDataUri = reader.result as string;
+          const response = await suvidhaOcrFlow({
+            documentDataUri,
+            outputFormat,
+            filename: file.name,
+          });
+          setResult(response);
+        } catch (e) {
+            console.error(e);
+            setError('An unexpected error occurred during processing.');
+        } finally {
+            setIsLoading(false);
+        }
       };
       reader.onerror = (error) => {
         console.error('FileReader error:', error);
         setError('Failed to read the file.');
+        setIsLoading(false);
       };
     } catch (e) {
       console.error(e);
-      setError('An unexpected error occurred during processing.');
-    } finally {
+      setError('An unexpected error occurred before processing.');
       setIsLoading(false);
     }
   };
@@ -76,21 +84,24 @@ export default function TryItNowPage() {
             </div>
 
             <div className="max-w-2xl mx-auto mt-12 space-y-8">
-              <DocumentUploader onFileChange={handleFileChange} isProcessing={isLoading} />
-              <OutputSelector
-                onFormatChange={setOutputFormat}
-                currentFormat={outputFormat}
-                isDisabled={isLoading}
-              />
-
-              <Button
-                size="lg"
-                className="w-full h-12 text-base"
-                onClick={handleProcess}
-                disabled={isLoading || !file}
-              >
-                {isLoading ? 'Processing with AI...' : 'Process Document'}
-              </Button>
+              {!isLoading && !result && (
+                <>
+                  <DocumentUploader onFileChange={handleFileChange} isProcessing={isLoading} />
+                  <OutputSelector
+                    onFormatChange={setOutputFormat}
+                    currentFormat={outputFormat}
+                    isDisabled={isLoading}
+                  />
+                  <Button
+                    size="lg"
+                    className="w-full h-12 text-base"
+                    onClick={handleProcess}
+                    disabled={isLoading || !file}
+                  >
+                    {isLoading ? 'Processing with AI...' : 'Process Document'}
+                  </Button>
+                </>
+              )}
 
               {error && (
                  <Alert variant="destructive">
@@ -100,12 +111,25 @@ export default function TryItNowPage() {
                 </Alert>
               )}
 
+              {isLoading && <ProcessingAnimation />}
+
               {result && (
-                <div className="mt-8">
-                  <h2 className="text-2xl font-bold tracking-tight text-center mb-4">
+                <div className="mt-8 space-y-6">
+                  <h2 className="text-2xl font-bold tracking-tight text-center">
                     Extracted Data
                   </h2>
                   <ResultsDisplay result={result} />
+                   <Button
+                    size="lg"
+                    className="w-full h-12 text-base"
+                    onClick={() => {
+                        setFile(null);
+                        setResult(null);
+                        setError(null);
+                    }}
+                  >
+                    Process Another Document
+                  </Button>
                 </div>
               )}
             </div>
