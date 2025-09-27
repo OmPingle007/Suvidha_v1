@@ -73,7 +73,10 @@ export default function ResultsDisplay({ result }: ResultsDisplayProps) {
                     </div>
                 );
             case 'csv':
-                const csvContent = processedData as string;
+                 const csvContent = processedData as string;
+                if (!csvContent || csvContent.trim() === '') {
+                    return <div className="bg-secondary/50 p-4 rounded-lg text-center text-muted-foreground">No tabular data found to display as CSV.</div>;
+                }
                 const rows = csvContent.split('\n').map(row => row.split(','));
                 const header = rows[0];
                 const body = rows.slice(1);
@@ -85,6 +88,7 @@ export default function ResultsDisplay({ result }: ResultsDisplayProps) {
                                     <tr className="border-b">
                                         {header.map((cell, i) => <th key={i} className="p-2 font-semibold text-left">{cell}</th>)}
                                     </tr>
+
                                 </thead>
                                 <tbody>
                                     {body.map((row, i) => (
@@ -120,7 +124,7 @@ export default function ResultsDisplay({ result }: ResultsDisplayProps) {
   return (
     <div className="w-full space-y-4">
         {renderContent()}
-        <Button onClick={handleDownload} className="w-full" size="lg">
+        <Button onClick={handleDownload} className="w-full" size="lg" disabled={format === 'csv' && (!processedData || (processedData as string).trim() === '')}>
             <Download className="mr-2 h-5 w-5" />
             Download {format.toUpperCase()}
         </Button>

@@ -30,10 +30,19 @@ const SuvidhaOcrOutputSchema = z.object({
 export type SuvidhaOcrOutput = z.infer<typeof SuvidhaOcrOutputSchema>;
 
 // Define a Zod schema for the expected structured output for JSON format.
+const KeyValuePairSchema = z.object({
+  key: z.string().describe('The identified label or key.'),
+  value: z.string().describe('The corresponding extracted value.'),
+});
+
+const TableRowSchema = z.object({
+  row: z.record(z.string()).describe('A single row in the table, with column headers as keys.'),
+});
+
 const JsonOutputStructure = z.object({
     documentType: z.string().describe("The identified type of the document (e.g., 'Invoice', 'Receipt', 'PAN Card')."),
-    keyValuePairs: z.record(z.string()).describe("All extracted key-value pairs from the document."),
-    tables: z.array(z.array(z.record(z.string()))).describe("Any tables found in the document, represented as an array of rows, where each row is an object."),
+    keyValuePairs: z.array(KeyValuePairSchema).describe("All extracted key-value pairs from the document."),
+    tables: z.array(z.array(TableRowSchema)).describe("Any tables found in the document, represented as an array of tables, where each table is an array of rows."),
     fullText: z.string().describe("The complete extracted text from the document."),
 });
 
