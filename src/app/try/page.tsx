@@ -54,7 +54,7 @@ export default function TryItNowPage() {
             if (e.message && e.message.includes('503 Service Unavailable')) {
                 setError('The AI service is currently busy or unavailable. Please try again in a few moments.');
             } else if (e.message && e.message.includes('404 Not Found')) {
-                setError('The configured AI model was not found. Please contact support.');
+                setError('The configured AI model was not found. This may be a regional availability issue. Please contact support if the problem persists.');
             }
              else {
                 setError('An unexpected error occurred during processing. Please check the console for details.');
