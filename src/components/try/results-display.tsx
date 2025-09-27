@@ -2,7 +2,6 @@
 
 import { ProcessedData } from '@/ai/flows/suvidha-ocr-flow';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Download } from 'lucide-react';
 import {
   Table,
