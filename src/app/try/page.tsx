@@ -51,13 +51,16 @@ export default function TryItNowPage() {
           setResult(response);
         } catch (e: any) {
             console.error(e);
-            if (e.message && e.message.includes('503 Service Unavailable')) {
-                setError('The AI service is currently busy or unavailable. Please try again in a few moments.');
-            } else if (e.message && e.message.includes('404 Not Found')) {
-                setError('The configured AI model was not found. This may be a regional availability issue. Please contact support if the problem persists.');
-            }
-             else {
-                setError('An unexpected error occurred during processing. Please check the console for details.');
+            if (e.message) {
+              if (e.message.includes('503') || e.message.toLowerCase().includes('service is currently unavailable')) {
+                setError('The AI service is currently busy or unavailable. This is a temporary issue. Please try again in a few moments.');
+              } else if (e.message.includes('404') || e.message.toLowerCase().includes('not found')) {
+                  setError('The configured AI model was not found. This may be a regional availability issue or a problem with the API key. Please contact support if the problem persists.');
+              } else {
+                  setError('An unexpected error occurred during processing. Please check the console for details and try again.');
+              }
+            } else {
+                setError('An unexpected error occurred. Please try again.');
             }
         } finally {
             setIsLoading(false);
