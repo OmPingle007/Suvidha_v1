@@ -37,7 +37,7 @@ const prompt = ai.definePrompt({
   name: 'validateDocumentTypePrompt',
   input: {schema: ValidateDocumentTypeInputSchema},
   output: {schema: ValidateDocumentTypeOutputSchema},
-  model: 'gemini-pro',
+  model: 'gemini-1.5-pro-latest',
   prompt: `You are an expert in document recognition for Indian MSMEs.
 
 You will determine if the uploaded document is of a type that is accepted by our system.
