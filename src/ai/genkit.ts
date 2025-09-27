@@ -1,9 +1,9 @@
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 
-if (!process.env.GEMINI_API_KEY) {
+if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'PASTE_YOUR_GEMINI_API_KEY_HERE' || !process.env.GEMINI_API_KEY.startsWith('AIza')) {
   throw new Error(
-    'Please set the GEMINI_API_KEY environment variable. You can get a key from Google AI Studio.'
+    'CRITICAL ERROR: Your Gemini API Key is missing or invalid.\n\nPlease get your API key from Google AI Studio (https://aistudio.google.com/app/apikey) and paste it into the .env file.\n\nThe key should start with "AIza".'
   );
 }
 
