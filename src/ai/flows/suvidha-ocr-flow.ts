@@ -1,3 +1,4 @@
+
 // src/ai/flows/suvidha-ocr-flow.ts
 'use server';
 /**
@@ -30,19 +31,10 @@ const SuvidhaOcrOutputSchema = z.object({
 export type SuvidhaOcrOutput = z.infer<typeof SuvidhaOcrOutputSchema>;
 
 // Define a Zod schema for the expected structured output for JSON format.
-const KeyValuePairSchema = z.object({
-  key: z.string().describe('The identified label or key.'),
-  value: z.string().describe('The corresponding extracted value.'),
-});
-
-const TableRowSchema = z.object({
-    row: z.any().describe('A single row in the table, with column headers as keys.'),
-});
-
 const JsonOutputStructure = z.object({
     documentType: z.string().describe("The identified type of the document (e.g., 'Invoice', 'Receipt', 'PAN Card')."),
-    keyValuePairs: z.array(KeyValuePairSchema).describe("All extracted key-value pairs from the document."),
-    tables: z.array(z.array(TableRowSchema)).describe("Any tables found in the document, represented as an array of tables, where each table is an array of rows."),
+    keyValuePairs: z.any().describe("All extracted key-value pairs from the document as a JSON object."),
+    tables: z.any().describe("Any tables found in the document, represented as an array of JSON objects."),
     fullText: z.string().describe("The complete extracted text from the document."),
 });
 
@@ -51,7 +43,6 @@ const jsonPrompt = ai.definePrompt({
     name: 'suvidhaOcrJsonPrompt',
     input: { schema: SuvidhaOcrInputSchema },
     output: { schema: JsonOutputStructure },
-    model: 'gemini-pro-vision',
     prompt: `You are an expert data entry operator for Indian MSMEs. Analyze this document. Identify if it is an invoice, receipt, purchase order, or another common business document.
     
     The document may contain English, Hindi (Devanagari), and other regional Indian languages. Prioritize accuracy and structure.
@@ -68,7 +59,6 @@ const jsonPrompt = ai.definePrompt({
 const textPrompt = ai.definePrompt({
     name: 'suvidhaOcrTextPrompt',
     input: { schema: SuvidhaOcrInputSchema },
-    model: 'gemini-pro-vision',
     prompt: `You are an expert data entry operator. Analyze this document, which may be in English or an Indian regional language like Hindi.
     
     Extract all text content from the document.
@@ -76,14 +66,13 @@ const textPrompt = ai.definePrompt({
     Return the output as clean, formatted plain text, preserving paragraphs and line breaks where appropriate.
 
     Document to process:
-    {{media url=documentDataUri}}
+    {{media url=documentDatavUri}}
     `,
 });
 
 const csvPrompt = ai.definePrompt({
     name: 'suvidhaOcrCsvPrompt',
     input: { schema: SuvidhaOcrInputSchema },
-    model: 'gemini-pro-vision',
     prompt: `You are an expert data entry operator. Analyze this document.
     
     Identify any tables within the document. Extract the data from these tables.
