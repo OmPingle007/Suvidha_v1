@@ -36,7 +36,7 @@ const KeyValuePairSchema = z.object({
 });
 
 const TableRowSchema = z.object({
-  row: z.record(z.string()).describe('A single row in the table, with column headers as keys.'),
+    row: z.any().describe('A single row in the table, with column headers as keys.'),
 });
 
 const JsonOutputStructure = z.object({
