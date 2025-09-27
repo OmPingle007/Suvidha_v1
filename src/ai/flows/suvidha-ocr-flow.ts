@@ -16,7 +16,7 @@ const OcrInputSchema = z.object({
   fileDataUri: z
     .string()
     .describe(
-      "The document file to process, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "The document file to process, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'"
     ),
   outputFormat: z.enum(['json', 'text', 'csv']),
 });
