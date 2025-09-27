@@ -1,7 +1,5 @@
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
-import { gemini15Flash, geminiPro } from '@genkit-ai/googleai';
-
 
 if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'PASTE_YOUR_GEMINI_API_KEY_HERE' || !process.env.GEMINI_API_KEY.startsWith('AIza')) {
   throw new Error(
@@ -14,9 +12,5 @@ export const ai = genkit({
     googleAI({
       apiKey: process.env.GEMINI_API_KEY,
     }),
-  ],
-  models: [
-    geminiPro,
-    gemini15Flash,
   ],
 });

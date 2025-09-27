@@ -66,7 +66,7 @@ const jsonPrompt = ai.definePrompt({
   input: { schema: OcrInputSchema },
   output: { schema: JsonOutputStructure },
   prompt: basePrompt,
-  model: gemini15Flash,
+  model: 'gemini-1.5-flash-latest',
 });
 
 // Prompt for plain text output
@@ -77,7 +77,7 @@ const textPrompt = ai.definePrompt({
   
   Please provide the full extracted text from the document as a clean, formatted plain text string.
   `,
-  model: gemini15Flash,
+  model: 'gemini-1.5-flash-latest',
 });
 
 // Prompt for CSV output
@@ -88,7 +88,7 @@ const csvPrompt = ai.definePrompt({
   
   Please convert the first and largest table found in the document into a CSV formatted string. Include a header row. If no table is found, return an empty string.
   `,
-  model: gemini15Flash,
+  model: 'gemini-1.5-flash-latest',
 });
 
 
